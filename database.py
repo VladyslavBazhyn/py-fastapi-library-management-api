@@ -13,7 +13,7 @@ SessionLocal = sqlalchemy.orm.sessionmaker(
     autocommit=False, autoflush=False, bind=engine
 )
 
-Base = sqlalchemy.ext.declarative.declarative_base()
+Base = sqlalchemy.orm.declarative_base()
 
 
 def get_db():

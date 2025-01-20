@@ -1,6 +1,9 @@
 from datetime import datetime
+from typing import List
 
 from pydantic import BaseModel
+
+import models
 
 
 class AuthorBase(BaseModel):
@@ -15,11 +18,20 @@ class BookBase(BaseModel):
     author_id: int
 
 
+class AuthorCreate(AuthorBase):
+    pass
+
+
 class Author(AuthorBase):
     id: int
+    books: List[models.Book] = []
 
     class Config:
         orm_mode = True
+
+
+class BookCreate(BookBase):
+    pass
 
 
 class Book(BookBase):
