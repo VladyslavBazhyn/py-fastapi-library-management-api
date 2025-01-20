@@ -12,6 +12,8 @@ class Book(Base):
     publication_date = Column(DateTime, unique=False, nullable=False)
     author_id = Column(ForeignKey("authors.id"))
 
+    author = orm.relationship("Author", back_populates="books")
+
 
 class Author(Base):
     __tablename__ = "authors"

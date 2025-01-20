@@ -12,12 +12,12 @@ app = FastAPI()
 Base.metadata.create_all(bind=engine)
 
 
-@app.get("/authors/create/", response_model=schemas.Author)
+@app.post("/authors/create/", response_model=schemas.Author)
 def create_author(db: Session, author: schemas.AuthorCreate):
     return crud.create_author(db, author)
 
 
-@app.get("/books/create/", response_model=schemas.Book)
+@app.post("/books/create/", response_model=schemas.Book)
 def create_book(db: Session, book: schemas.BookCreate):
     return crud.create_book(db, book)
 

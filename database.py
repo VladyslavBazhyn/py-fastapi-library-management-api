@@ -17,7 +17,7 @@ Base = sqlalchemy.orm.declarative_base()
 
 
 def get_db():
-    db = sqlalchemy.orm.Sessionmaker()
+    db = SessionLocal()
     try:
         yield db
     finally:

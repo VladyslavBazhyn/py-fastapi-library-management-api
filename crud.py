@@ -13,7 +13,7 @@ def get_authors(db: Session, skip: int = 0, limit: int = 10):
 
 
 def get_book(db: Session, book_id: int):
-    book = db.query(models.Book).get(book_id, None)
+    book = db.query(models.Book).filter_by(id=book_id).first()
 
     if book is None:
         raise HTTPException(status_code=404, detail="Book not found")
@@ -22,7 +22,7 @@ def get_book(db: Session, book_id: int):
 
 
 def get_author(db: Session, author_id: int):
-    author = db.query(models.Author).get(author_id, None)
+    author = db.query(models.Author).filter_by(id=author_id).first()
 
     if author is None:
         raise HTTPException(status_code=404, detail="Book not found")
@@ -75,10 +75,8 @@ def update_book(db: Session, book_id: int, updated_book: schemas.BookCreate):
 def update_author(db: Session, author_id: int, updated_author: schemas.AuthorCreate):
     db_author = get_author(db=db, author_id=author_id)
 
-    db_author.title = updated_author.title
-    db_author.author_id = updated_author.author_id
-    db_author.summary = updated_author.summary
-    db_author.publication_date = updated_author.publication_date
+    db_author.bio = updated_author.bio
+    db_author.name = updated_author.name
 
     db.commit()
     db.refresh(db_author)
