@@ -3,7 +3,7 @@ from typing import List
 
 from pydantic import BaseModel
 
-import models
+from models import Book
 
 
 class AuthorBase(BaseModel):
@@ -24,7 +24,7 @@ class AuthorCreate(AuthorBase):
 
 class Author(AuthorBase):
     id: int
-    books: List[models.Book] = []
+    books: List[Book] = []
 
     class Config:
         orm_mode = True

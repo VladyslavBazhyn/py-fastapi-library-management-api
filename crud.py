@@ -1,14 +1,23 @@
-from fastapi import HTTPException
+from fastapi import HTTPException, Depends, Query
 from sqlalchemy.orm import Session
 
 import models, schemas
+from database import get_db
 
 
-def get_books(db: Session, skip: int = 0, limit: int = 10):
+def get_books(
+    db: Session = Depends(get_db),
+    skip: int = Query(0, ge=0),
+    limit: int = Query(10, ge=1, le=100)
+):
     return db.query(models.Book).offset(skip).limit(limit).all()
 
 
-def get_authors(db: Session, skip: int = 0, limit: int = 10):
+def get_authors(
+    db: Session = Depends(get_db),
+    skip: int = Query(0, ge=0),
+    limit: int = Query(10, ge=1, le=100)
+):
     return db.query(models.Author).offset(skip).limit(limit).all()
 
 
@@ -25,7 +34,7 @@ def get_author(db: Session, author_id: int):
     author = db.query(models.Author).filter_by(id=author_id).first()
 
     if author is None:
-        raise HTTPException(status_code=404, detail="Book not found")
+        raise HTTPException(status_code=404, detail="Author not found")
 
     return author
 
